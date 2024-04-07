@@ -1,23 +1,30 @@
+"use client"
+
 import React, { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { signIn } from "./firebase/Sigin";
+import { googleSignIn } from "./firebase/googleSignIn";
+import { useRouter } from "next/navigation";
 export function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState(false);
-
+const Router = useRouter()
   useEffect(() => {
     if (email.length > 0 && password.length > 0) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, []);
+  }, [email,password]);
 
   async function getSignIn() {
     try {
-      const value = await signIn(email, password);
-      console.log(value);
+      await signIn(email, password);
+      setTimeout(() => {
+        Router.push("/login")
+        
+      }, 1000);
     } catch (error: any) {
       console.log(error);
     }
@@ -90,7 +97,7 @@ export function SignUp() {
                     type="password"
                     placeholder="Password"
                     id="password"
-                    onChange={(e) => setPassword(e.target.validationMessage)}
+                    onChange={(e) => setPassword(e.target.value)}
                   ></input>
                 </div>
               </div>
@@ -108,6 +115,7 @@ export function SignUp() {
           </form>
           <div className="mt-3 space-y-3">
             <button
+            onClick={()=>googleSignIn()}
               type="button"
               className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
             >

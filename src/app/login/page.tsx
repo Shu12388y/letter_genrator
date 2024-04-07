@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Toaster,toast } from 'react-hot-toast'
 import {Login} from "./firebase/Login"
-export function LoginPage() {
+function LoginPage() {
   const [email,setEmail] =  useState('')
   const [password,setPassword] =  useState('')
 
@@ -141,3 +141,6 @@ export function LoginPage() {
                   </>
   )
 }
+
+
+export default  LoginPage
